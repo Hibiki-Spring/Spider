@@ -1,0 +1,83 @@
+package com.day01.spider;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+
+/**
+ * Example program to list links from a URL.
+ */
+public class ListLinks {
+    public static void main(String[] args) throws IOException {
+        
+        String url = "http://www.ivsky.com/bizhi/sword_art_online_the_movie_ordinal_scale_v46267/pic_734712.html#al_tit";
+        print("Fetching %s...", url);
+
+        Document doc = Jsoup.connect(url).get();
+//        Elements links = doc.select("a[href]");
+        Elements media = doc.select("[src]");
+//        Elements imports = doc.select("link[href]");
+        
+        //System.out.println(doc);
+        
+
+        print("\nMedia: (%d)", media.size());
+        for (Element src : media) {
+        	try {
+        		String img_url = src.attr("abs:src");
+//            	String img_alt = trim(src.attr("alt"), 25);
+                if (src.tagName().equals("img")) 
+                	print(img_url);
+                else {
+                	
+                }
+                	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+        	
+//            	String newImageName="D://BILIBILI//"+img_alt+".png";
+//            	URL url1 = new URL(img_url);  
+//                //打开网络输入流  
+//                DataInputStream dis = new DataInputStream(url1.openStream());
+//                //建立一个新的文件  
+//                FileOutputStream fos = new FileOutputStream(new File(newImageName));  
+//                byte[] buffer = new byte[1024];  
+//                int length;  
+//                //开始填充数据  
+//                while((length = dis.read(buffer))>0){  
+//                    fos.write(buffer,0,length);  
+//                }  
+//                dis.close();  
+//                fos.close(); 
+//            
+
+//                print(" * %s: <%s>", src.tagName(), src.attr("abs:src"));
+            	
+        }
+
+//        print("\nImports: (%d)", imports.size());
+//        for (Element link : imports) {
+//            print(" * %s <%s> (%s)", link.tagName(),link.attr("abs:href"), link.attr("rel"));
+//        }
+//
+//        print("\nLinks: (%d)", links.size());
+//        for (Element link : links) {
+//            print(" * a: <%s>  (%s)", link.attr("abs:href"), trim(link.text(), 35));
+//        }
+    }
+
+    private static void print(String msg, Object... args) {
+        System.out.println(String.format(msg, args));
+    }
+
+//    private static String trim(String s, int width) {
+//        if (s.length() > width)
+//            return s.substring(0, width-1) + ".";
+//        else
+//            return s;
+//    }
+}
